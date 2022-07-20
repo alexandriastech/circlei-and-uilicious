@@ -1,9 +1,27 @@
+version: 2.1
+executors:
+  my-custom-executor:
+    docker:
+      - image: cimg/base:stable
+        auth:
+          # ensure you have first added these secrets
+          # visit app.circleci.com/settings/project/github/alexandriastech/circlei-and-uilicious/environment-variables
+          username: $DOCKER_HUB_USER
+          password: $DOCKER_HUB_PASSWORD
 jobs:
-  build: # name of your job
-    docker: # executor type
-      - image: cimg/base:stable # primary container will run the latest, production-ready base image
+  run-uilicious:
+    environment:
+      <access-key>: GPRrihvU5XCVeiaw9Vy5p3
+    executor: my-custom-executor
+    steps:
+      - checkout
+      - run: |
+          # echo Hello, World!
+          - npm install -g uilicious-cli
+          - uilicious-cli run "My First Project" "myfirstTest" --key <access-key>
+                   
 
-      steps:   # Commands run in the primary container
-         - npm install -g uilicious-cli
-         - uilicious-cli run "My First Project" "myfirstTest" --key GPRrihvU5XCVeiaw9Vy5p3
-         
+workflows:
+  my-custom-workflow:
+    jobs:
+      - run-uilicious
