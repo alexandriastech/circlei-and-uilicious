@@ -1,0 +1,9 @@
+jobs:
+  build: # name of your job
+    docker: # executor type
+      - image: cimg/base:stable # primary container will run the latest, production-ready base image
+
+      steps:   # Commands run in the primary container
+         - npm install -g uilicious-cli
+         - uilicious-cli run "My First Project" "myfirstTest" --key GPRrihvU5XCVeiaw9Vy5p3
+         
